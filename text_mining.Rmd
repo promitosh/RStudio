@@ -1,0 +1,234 @@
+---
+title: "text mining"
+author: "pro"
+date: "August 22, 2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+Sys.time()
+# inspect the startdate column of 2016 polls data, a Date type
+library(tidyverse)
+library(dslabs)
+data("polls_us_election_2016")
+polls_us_election_2016$startdate %>% head
+class(polls_us_election_2016$startdate)
+as.numeric(polls_us_election_2016$startdate) %>% head
+# ggplot is aware of dates
+polls_us_election_2016 %>% filter(pollster == "Ipsos" & state =="U.S.") %>%
+ggplot(aes(startdate, rawpoll_trump)) +
+geom_line()
+# lubridate: the tidyverse date package
+library(lubridate)
+# select some random dates from polls
+set.seed(2)
+dates <- sample(polls_us_election_2016$startdate, 10) %>% sort
+dates
+# extract month, day, year from date strings
+data.frame(date = dates,
+month = month(dates),
+day = day(dates),
+year = year(dates))
+month(dates, label = TRUE)    # extract month label
+# different parsers extract year, month and day in different orders
+x <- "09/01/02"
+ymd(x)
+mdy(x)
+ydm(x)
+myd(x)
+dmy(x)
+dym(x)
+now()    # current time in your time zone
+now("GMT")    # current time in GMT
+now() %>% hour()    # current hour
+now() %>% minute()    # current minute
+now() %>% second()    # current second
+# parse time
+x <- c("12:34:56")
+hms(x)
+data(brexit_polls)
+library(dslabs)
+library(lubridate)
+options(digits = 3)    # 3 significant digits
+data(brexit_polls)
+x<-brexit_polls$startdate %>% sort()
+library(dplyr)
+x<-brexit_polls$startdate %>% sort()
+x %>% arrange(match(months, month.Apr))
+x<-match(brexit_polls$startdate, month.Apr)
+x<-match(brexit_polls$startdate,month.apr)
+x<-match(brexit_polls$startdate,month.abb)
+x
+x %>% arrange(match(months, month.name))
+x<-brexit_polls$startdate %>% sort()
+x
+x %>% arrange(match(months, month.name))
+y<-ymd(x)
+y
+as.numeric(x)
+y<-month(x,label = True)
+y<-month(x,label = TRUE)
+y
+y<-month(x,label=Apr)
+y<-month(y,label="Apr")
+y<-month(x,label = TRUE)
+y %>% arrange(match(months, month.Apr))
+y %>% match(months, month.Apr)
+y %>% match(months, Apr)
+group_by(month) %>%
+library(tidyverse)
+library(gutenbergr)
+library(tidytext)
+options(digits = 3)
+install.packages("gutenbergr")
+library(tidytext)
+library(tidyverse)
+library(tidytext)
+install.packages("tidytext")
+gutenberg_metadata %>%
+filter(str_detect(title, "Pride and Prejudice"))
+library(dslabs)
+library(lubridate)
+options(digits = 3)    # 3 significant digits
+Dates, Times, and Text Mining
+data(brexit_polls)
+#How many polls had a start date (startdate) in April (month number 4)?
+start_date<-date(brexit_polls$startdate)
+month(start_date)
+sum(month==4)
+sum(month(start_date)==4)
+#Use the round_date() function on the enddate column with the argument unit="week". ##How many polls ended the week of 2016-06-12?
+#Read the documentation to learn more about round_date().                           sum(round_date(brexit_polls$enddate, unit = "week") == "2016-06-12")
+sum(round_date(brexit_polls$enddate, unit = "week") == "2016-06-12")
+#Use the weekdays() function from lubridate to determine the weekday on which each #poll ended (enddate).On which weekday did the greatest number of polls end?
+x<-max.which(weekdays(brexit_polls$enddate))
+#Table function in R -table(), performs categorical tabulation of data with the #variable and its frequency. Table() function is also helpful in creating Frequency #tables with condition and cross tabulations.
+table(weekdays(brexit_polls$enddate))
+data(movielens)
+str(movielens)
+#Convert the timestamp column to dates using the lubridate as_datetime() function.
+dates_movilens<-as_datetime(movielens$timestamp)
+table(dates_movilens)
+dates_movilens<-as_datetime(movielens$timestamp)
+max(dates_movilens)
+year<-table(year(dates_movilens))
+year
+which_year_max<-which.max(year)
+which_year_max
+hour<-table(hour(dates_movilens))
+#hour function
+which_hour_max<-which.max(hour)
+which_hour_max
+library(tidyverse)
+library(gutenbergr)
+library(tidytext)
+data("gutenberg_metadata")
+#dataset gutenberg_metadata
+#str_detect() to find the ID of the novel Pride and Prejudice.
+str_detect(gutenberg_metadata,title="Pride and Prejudice")
+str_detect(title,"Pride and Prejudice")
+#str should be character vector
+filter(str_detect(gutenberg_metadata$title,"Pride and Prejudice"))
+id<-gutenberg_metadata %>%
+filter(str_detect(title,"Pride and Prejudice"))
+id
+gutenberg_works(language=en,title="Pride and Prejudice")
+gutenberg_works(language=en,Author="Austene",title="Pride and Prejudice")
+str(id)
+gutenberg_works(language=en,Author="Austen, Jane",title="Pride and Prejudice")
+gutenberg_works(language=en,Author="Austen, Jane")
+gutenberg_works(language=en,Author=="Austen, Jane", title = "Pride and Prejudice")
+gutenberg_works(language=en,Author=="Austen, Jane")
+gutenberg_works(language="en",Author=="Austen, Jane")
+gutenberg_works(Author=="Austen, Jane")
+gutenberg_works(language="en",Author=="Austen, Jane",title=="Pride and Prejudice")
+gutenberg_works(title == "Pride and Prejudice")
+gutenberg_works(title == "Pride and Prejudice")$gutenberg_id
+gutenberg_works(title == "Pride and Prejudice")$author
+#Use the gutenberg_download() function
+words<-gutenberg_download(1342)
+install.packages("tidytext")
+install.packages("tidytext")
+#how many words are present in the book pride and prejuduce
+head(words)
+nrow(words)
+words%>%
+book<-words %>%
+unnest_tokens(word, text)
+nrow(book)
+#Remove stop words from the words object
+tidy_word<-
+anti_join(stop_words(book))
+tidy_word<-book %>%
+anti_join(stop_words)
+nrow(tidy_word)
+#After removing stop words, detect and then filter out any token that contains a #digit from words.How many words remain?
+clean_words<-tidy_word %>% filter(!str_detect(word, "\\d"))
+nrow(clean_words)
+words <- words %>%
+filter(!str_detect(word, "\\d"))
+nrow(words)
+c_words <- tidy_word %>%
+filter(!str_detect(word, "\\d")) # filter out not digit string
+nrow(c_words)
+clean_words %>%
+count(word, sort = TRUE)
+#use dplyr’s count() to find the most common words in all the book as a whole
+clean_book<-clean_words
+library(ggplot2)
+clean_book %>%
+count(word, sort = TRUE) %>%
+filter(n > 600) %>%
+mutate(word = reorder(word, n)) %>%
+ggplot(aes(word, n)) +
+geom_col() +
+xlab(NULL) +
+coord_flip()
+frequet_word<-clean_book %>%
+count(word, sort = TRUE) %>%
+filter(n > 100)
+table(frequet_word)
+nrow(frequet_word)
+clean_word %>%
+count(word) %>%
+filter(n > 100) %>%
+nrow()
+clean_words %>%
+count(word) %>%     filter(n > 100) %>%
+nrow()
+#What is the most common word in the book?
+clean_words %>%
+count(word) %>%
+top_n(1, n) %>%
+pull(word)
+clean_words %>%
+count(word) %>%
+top_n(1, n) %>%
+pull(n)
+#he AFINN lexicon is a list of English terms manually rated for valence with an integer between -5 (negative) and +5 (positive) by Finn Årup Nielsen between 2009 and 2011.
+afinn <- get_sentiments("afinn")
+url<-"http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010"
+library(tidytext)
+get_sentiments("afinn")
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
