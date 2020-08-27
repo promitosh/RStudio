@@ -1,0 +1,190 @@
+---
+title: "project"
+author: "pro"
+date: "August 27, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+install.packages("tidytext")
+#how many words are present in the book pride and prejuduce
+head(words)
+nrow(words)
+words%>%
+book<-words %>%
+unnest_tokens(word, text)
+nrow(book)
+#Remove stop words from the words object
+tidy_word<-
+anti_join(stop_words(book))
+tidy_word<-book %>%
+anti_join(stop_words)
+nrow(tidy_word)
+#After removing stop words, detect and then filter out any token that contains a #digit from words.How many words remain?
+clean_words<-tidy_word %>% filter(!str_detect(word, "\\d"))
+nrow(clean_words)
+words <- words %>%
+filter(!str_detect(word, "\\d"))
+nrow(words)
+c_words <- tidy_word %>%
+filter(!str_detect(word, "\\d")) # filter out not digit string
+nrow(c_words)
+clean_words %>%
+count(word, sort = TRUE)
+#use dplyr’s count() to find the most common words in all the book as a whole
+clean_book<-clean_words
+library(ggplot2)
+clean_book %>%
+count(word, sort = TRUE) %>%
+filter(n > 600) %>%
+mutate(word = reorder(word, n)) %>%
+ggplot(aes(word, n)) +
+geom_col() +
+xlab(NULL) +
+coord_flip()
+frequet_word<-clean_book %>%
+count(word, sort = TRUE) %>%
+filter(n > 100)
+table(frequet_word)
+nrow(frequet_word)
+clean_word %>%
+count(word) %>%
+filter(n > 100) %>%
+nrow()
+clean_words %>%
+count(word) %>%     filter(n > 100) %>%
+nrow()
+#What is the most common word in the book?
+clean_words %>%
+count(word) %>%
+top_n(1, n) %>%
+pull(word)
+clean_words %>%
+count(word) %>%
+top_n(1, n) %>%
+pull(n)
+#he AFINN lexicon is a list of English terms manually rated for valence with an integer between -5 (negative) and +5 (positive) by Finn Årup Nielsen between 2009 and 2011.
+afinn <- get_sentiments("afinn")
+url<-"http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010"
+library(tidytext)
+get_sentiments("afinn")
+3000-95
+2150-95
+1104/4
+276*5
+i<-(11.05/100)*100000
+i
+i<-((11.05/100)*100000)/4
+i
+evry_month_of_15lac<-i*15
+evry_month_of_15lac<-i15
+i15<-evry_month_of_15lac
+i15
+evry_month_of_5lac<-i*5
+i5<-evry_month_of_5lac
+i5
+i
+i5
+i15
+library(tidyverse)
+library(pdftools)
+options(digits = 3)    # report 3 significant digits
+install.packages(pdftools)
+install.packages("pdftools")
+library(pdftools)
+fn <- system.file("extdata", "RD-Mortality-Report_2015-18-180531.pdf", package="dslabs")
+#In the extdata directory of the dslabs package, you will find a PDF file
+#Find and open the file or open it directly from RStudio. On a Mac, you can type:
+system("cmd.exe", input = paste("start", fn))
+#Use the pdftools package to read in fn using the pdf_text() function. Store the results in an object called txt
+txt<-pdf_text(fn)
+class(txt)
+str(txt)
+PDF.grass <-txt
+PDF.grass
+PDF.grass <-txt[9]
+x<PDF.grass
+PDF.grass
+x<-PDF.grass
+x
+x<-str_split(x)
+library(stringr)
+-str_split(x,\n)
+str_split(x,\n)
+str_split(x,"\n")
+table(x)
+sum(x)
+sum(as.numeric(x))
+strsplit(x,split = "\n")
+class(x)
+x<-as.numeric(x)
+head(x)
+x
+class(x)
+x
+txt<-pdf_text(fn)
+x<-txt[9]
+str_split(x,"\n")
+class(x)
+x<-strsplit(x,split = "\n")
+head(x)
+length(x)
+count(x)
+summarise(x)
+class(x)
+x<-data_frame(x)
+tibble(x)
+head(x)
+length(x)
+s<-x[1]
+s
+length(s)
+s<-x[0:1]
+s<-x[1]
+sinstall.packages("pdftools")
+library(pdftools)
+fn <- system.file("extdata", "RD-Mortality-Report_2015-18-180531.pdf", package="dslabs")
+system("cmd.exe", input = paste("start", fn))
+txt<-pdf_text(fn)
+x <- str_split(txt[9], "\n")
+library(stringr)
+x <- str_split(txt[9], "\n")
+class(x)
+length(x)
+s <- x[[1]]
+class(s)
+length(s)
+s <- str_trim(s)
+s[1]    # print string, visually inspect last character
+header_index <- str_which(s, "2015")[1]
+header_index
+tmp <- str_split(s[header_index], "\\s+", simplify = TRUE)
+month <- tmp[1]
+header <- tmp[-1]
+month
+header[3]
+
+s<-x[1,1]
+length(s)
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
